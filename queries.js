@@ -5,83 +5,240 @@ import Answer from "./models/Answer.js";
 import dotenv from "dotenv";
 
 async function query1() {
-  // Write code for Query 1 here
+  try {
+    const user = await User.create({
+      name: "Robin",
+      email: "robin@example.com",
+      password: "hashed_password_7",
+      createdAt: new Date("2025-06-25T10:15:00Z")
+    });
+    console.log(user);
+  } catch (err) {
+    console.error("Error in Query 1:", err);
+  }
 }
 
 async function query2() {
-  // Write code for Query 2 here
+  try {
+    const user = await User.findOne({ email: "alice@example.com" });
+    console.log(user);
+  } catch (err) {
+    console.error("Error in Query 2:", err);
+  }
 }
 
 async function query3() {
-  // Write code for Query 3 here
+  try {
+    const question = await Question.findOne({
+      title: "How can I improve the performance of a react app?"
+    });
+    console.log(question);
+  } catch (err) {
+    console.error("Error in Query 3:", err);
+  }
 }
 
 async function query4() {
-  // Write code for Query 4 here
+  try {
+    const questions = await Question.find({ tags: "javascript" });
+    console.log(questions);
+  } catch (err) {
+    console.error("Error in Query 4:", err);
+  }
 }
 
 async function query5() {
-  // Write code for Query 5 here
+  try {
+    const questions = await Question.find({
+      createdAt: { $gt: new Date("2023-04-01") }
+    });
+    console.log(questions);
+  } catch (err) {
+    console.error("Error in Query 5:", err);
+  }
 }
 
 async function query6() {
-  // Write code for Query 6 here
+  try {
+    const questions = await Question.find({
+      tags: { $in: ["javascript", "react"] }
+    });
+    console.log(questions);
+  } catch (err) {
+    console.error("Error in Query 6:", err);
+  }
 }
 
 async function query7() {
-  // Write code for Query 7 here
+  try {
+    const tags = await Question.distinct("tags");
+    console.log(tags);
+  } catch (err) {
+    console.error("Error in Query 7:", err);
+  }
 }
 
 async function query8() {
-  // Write code for Query 8 here
+  try {
+    const questions = await Question.find({ views: { $gte: 50 } });
+    console.log(questions);
+  } catch (err) {
+    console.error("Error in Query 8:", err);
+  }
 }
 
 async function query9() {
-  // Write code for Query 9 here
+  try {
+    const answers = await Answer.find({ voteCount: 0 });
+    console.log(answers);
+  } catch (err) {
+    console.error("Error in Query 9:", err);
+  }
 }
 
 async function query10() {
-  // Write code for Query 10 here
+  try {
+    const answers = await Answer.find({ voteCount: { $gt: 0 } });
+    console.log(answers);
+  } catch (err) {
+    console.error("Error in Query 10:", err);
+  }
 }
 
 async function query11() {
-  // Write code for Query 11 here
+  try {
+    const users = await User.find({
+      createdAt: {
+        $gte: new Date("2023-01-01"),
+        $lt: new Date("2023-05-01")
+      }
+    });
+    console.log(users);
+  } catch (err) {
+    console.error("Error in Query 11:", err);
+  }
 }
 
 async function query12() {
-  // Write code for Query 12 here
+  try {
+    const question = await Question.findOne({
+      title: "How do I set up routing with react router v6?"
+    });
+
+    if (!question) return console.log("Question not found");
+
+    const answers = await Answer.find(
+      { question: question._id },
+      { text: 1, author: 1 }
+    );
+
+    console.log(answers);
+  } catch (err) {
+    console.error("Error in Query 12:", err);
+  }
 }
 
 async function query13() {
-  // Write code for Query 13 here
+  try {
+    const usersWithAnswers = await Answer.distinct("author");
+    const users = await User.find({ _id: { $nin: usersWithAnswers } });
+    console.log(users);
+  } catch (err) {
+    console.error("Error in Query 13:", err);
+  }
 }
 
 async function query14() {
-  // Write code for Query 14 here
+  try {
+    const topQuestions = await Question.find()
+      .sort({ voteCount: -1 })
+      .limit(2);
+
+    console.log(topQuestions);
+  } catch (err) {
+    console.error("Error in Query 14:", err);
+  }
 }
 
 async function query15() {
-  // Write code for Query 15 here
+  try {
+    const result = await Answer.aggregate([
+      { $group: { _id: "$author", answerCount: { $sum: 1 } } }
+    ]);
+
+    console.log(result);
+  } catch (err) {
+    console.error("Error in Query 15:", err);
+  }
 }
 
 async function query16() {
-  // Write code for Query 16 here
+  try {
+    const result = await Answer.aggregate([
+      { $group: { _id: "$author", answerCount: { $sum: 1 } } },
+      { $sort: { answerCount: -1 } },
+      { $limit: 2 }
+    ]);
+
+    console.log(result);
+  } catch (err) {
+    console.error("Error in Query 16:", err);
+  }
 }
 
 async function query17() {
-  // Write code for Query 17 here
+  try {
+    const updated = await Question.findOneAndUpdate(
+      {
+        title:
+          "Why is my async function returning a promise instead of the actual value?"
+      },
+      { tags: ["javascript", "async"] },
+      { new: true }
+    );
+
+    console.log(updated);
+  } catch (err) {
+    console.error("Error in Query 17:", err);
+  }
 }
 
 async function query18() {
-  // Write code for Query 18 here
+  try {
+    const updated = await User.findOneAndUpdate(
+      { email: "alice@example.com" },
+      { name: "Alice Smith" },
+      { new: true }
+    );
+
+    console.log(updated);
+  } catch (err) {
+    console.error("Error in Query 18:", err);
+  }
 }
 
 async function query19() {
-  // Write code for Query 19 here
+  try {
+    const deleted = await User.findOneAndDelete({
+      email: "jhonny@example.com"
+    });
+
+    console.log(deleted);
+  } catch (err) {
+    console.error("Error in Query 19:", err);
+  }
 }
 
 async function query20() {
-  // Write code for Query 20 here
+  try {
+    const user = await User.findOne({ email: "alice@example.com" });
+    if (!user) return console.log("User not found");
+
+    const deleted = await Answer.deleteMany({ author: user._id });
+    console.log(deleted);
+  } catch (err) {
+    console.error("Error in Query 20:", err);
+  }
 }
 
 async function runQueries() {
