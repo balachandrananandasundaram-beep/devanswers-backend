@@ -287,10 +287,9 @@ async function runQueries() {
   );
   await query11();
   printHeader( 
-    12A,
+    "12A",
     "Update question id value in Answer db"
   ); 
-  )
   await query12a();
   printHeader(
     12,
