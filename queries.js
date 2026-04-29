@@ -119,18 +119,6 @@ async function query11() {
   }
 }
 
-// Query 12 a - To update question id in answer DB 
-async function query12a() {
-  console.log("Running Query 12a: Update answer questionId");
-
-  await Answer.updateOne(
-    { _id: "69e031dc1adb9abb4a7e69ef" },
-    { $set: { questionId: "69e031dc1adb9abb4a7e69e9" } }
-  );
-
-  console.log("Query 12a completed");
-}
-
 // Modified correct field mapping in Query 12  
 async function query12() {
   try {
@@ -286,11 +274,6 @@ async function runQueries() {
     "Retrieve all users whose account was created between January 1, 2023 (inclusive) and May 1, 2023 (exclusive)",
   );
   await query11();
-  printHeader( 
-    "12A",
-    "Update question id value in Answer db"
-  ); 
-  await query12a();
   printHeader(
     12,
     'Fetch the answer text and author id of all answers for the question "How do I set up routing with react router v6?"',
