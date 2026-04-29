@@ -15,20 +15,24 @@ const answerSchema = new mongoose.Schema({
     ref: "User",
     required: true
   },
-  upvotes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      default: []
-    }
-  ],
-  downvotes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      default: []
-    }
-  ],
+ // Tighten Schema defaults for vote arrays.  
+  upvotes: {
+  type: [mongoose.Schema.Types.ObjectId],
+  ref: "User",
+  default: [],
+  validate: {
+    validator: arr => arr.every(v => mongoose.Types.ObjectId.isValid(v)),
+    message: "upvotes must contain valid ObjectIds only"
+  }
+},
+downvotes: {
+  type: [mongoose.Schema.Types.ObjectId],
+  ref: "User",
+  default: [],
+  validate: {
+    validator: arr => arr.every(v => mongoose.Types.ObjectId.isValid(v)),
+    message: "downvotes must contain valid ObjectIds only"
+  }},
   voteCount: {
     type: Number,
     default: 0
